@@ -26,6 +26,8 @@ class Movie {
   });
 }
 
+
+
 List<Movie> movies = [
   const Movie(
     name: 'Fast & Furious 6',

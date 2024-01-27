@@ -4,6 +4,7 @@ import 'package:gap/gap.dart';
 import 'package:ronasapp/models/models.dart';
 import 'package:ronasapp/screens/director_details_screen.dart';
 import 'package:ronasapp/screens/movie_detail_screen.dart';
+import 'package:ronasapp/services/services.dart';
 import 'package:ronasapp/utils/extensions.dart';
 
 import '../widgets/widgets.dart';
@@ -73,19 +74,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     //new movies
                     SizedBox(
                       height: 330,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemCount: movies.length,
-                        itemBuilder: (context, index) {
-                          final movie = movies[index];
-                          return GestureDetector(
-                              onTap: () {
-                                Navigator.of(context).pushNamed(MovieDetailsScreen.routeName, arguments: movie);
+                       child:ListView.separated(
+                              scrollDirection: Axis.horizontal,
+                              itemCount: movies.length,
+                              itemBuilder: (context, index) {
+                                final movie = movies[index];
+                                return GestureDetector(
+                                    onTap: () {
+                                      Navigator.of(context).pushNamed(MovieDetailsScreen.routeName, arguments: movie);
+                                    },
+                                    child: MovieCard(movie: movie));
                               },
-                              child: MovieCard(movie: movie));
-                        },
-                        separatorBuilder: (context, index) => const Gap(15),
-                      ),
+                              separatorBuilder: (context, index) => const Gap(15),
+                            )
+                     
                     ),
                     const Text(
                       "Genres",
