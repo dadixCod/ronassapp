@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:ronasapp/screens/screens.dart';
 import 'package:ronasapp/theme/app_theme.dart';
 import 'package:ronasapp/widgets/widgets.dart';
+import 'package:provider/provider.dart';
+import 'package:ronasapp/providers/providers.dart';
 
 class RonasApp extends StatefulWidget {
   const RonasApp({super.key});
@@ -20,24 +22,31 @@ class _RonasAppState extends State<RonasApp> {
     ];
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: AppTheme.dark,
-      home: Scaffold(
-        body: screens[currentIndex],
-        bottomNavigationBar: CustomBottomNavigationBar(
-        currentIndex: currentIndex,
-        onPress: (index) {
-          setState(() {
-            currentIndex = index;
-          });
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider<Movies>(create: (ctx) => Movies()),
+        ChangeNotifierProvider<Directors>(create: (ctx)=> Directors())
+
+      ],
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        theme: AppTheme.dark,
+        home: Scaffold(
+          body: screens[currentIndex],
+          bottomNavigationBar: CustomBottomNavigationBar(
+          currentIndex: currentIndex,
+          onPress: (index) {
+            setState(() {
+              currentIndex = index;
+            });
+          },
+        ),
+        ),
+        routes: {
+          DirectorDetails.routeName: (context) => const DirectorDetails(),
+          MovieDetailsScreen.routeName : (context) => const MovieDetailsScreen(),
         },
       ),
-      ),
-      routes: {
-        DirectorDetails.routeName: (context) => const DirectorDetails(),
-        MovieDetailsScreen.routeName : (context) => const MovieDetailsScreen(),
-      },
     );
   }
 }

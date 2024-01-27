@@ -5,9 +5,9 @@ import 'package:ronasapp/models/models.dart';
 import 'package:ronasapp/providers/movies.dart';
 import 'package:ronasapp/utils/extensions.dart';
 
-class MovieCard extends StatelessWidget {
+class MovieFavorite extends StatelessWidget {
   final Movie movie;
-  const MovieCard({super.key, required this.movie});
+  const MovieFavorite({super.key, required this.movie});
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +18,8 @@ class MovieCard extends StatelessWidget {
           children: [
             Container(
               clipBehavior: Clip.hardEdge,
-              height: 260,
-              width: 180,
+              height: 320,
+              width: 220,
               decoration: BoxDecoration(
                 color: context.colorScheme.surface,
                 borderRadius: BorderRadius.circular(15),
@@ -107,50 +107,6 @@ class MovieCard extends StatelessWidget {
           ],
         ),
         const Gap(10),
-        SizedBox(
-          width: 180,
-          child: Text(
-            movie.name,
-            maxLines: 1,
-            softWrap: true,
-            overflow: TextOverflow.ellipsis,
-            style: context.textTheme.bodyLarge!.copyWith(),
-          ),
-        ),
-        SizedBox(
-          width: 170,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: 80,
-                child: Text(
-                  overflow: TextOverflow.ellipsis,
-                  movie.category.first.toString(),
-                  style: TextStyle(
-                    color: context.colorScheme.outline,
-                  ),
-                ),
-              ),
-              const Gap(7),
-              Container(
-                height: 5,
-                width: 5,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: context.colorScheme.outline,
-                ),
-              ),
-              const Gap(7),
-              Text(
-                "${movie.minutes} mins",
-                style: TextStyle(
-                  color: context.colorScheme.outline,
-                ),
-              ),
-            ],
-          ),
-        )
       ],
     );
   }

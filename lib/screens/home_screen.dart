@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import 'package:gap/gap.dart';
 import 'package:ronasapp/models/models.dart';
+import 'package:ronasapp/providers/providers.dart';
 import 'package:ronasapp/screens/director_details_screen.dart';
 import 'package:ronasapp/screens/movie_detail_screen.dart';
-import 'package:ronasapp/services/services.dart';
 import 'package:ronasapp/utils/extensions.dart';
+import 'package:ronasapp/widgets/movie_cards_list.dart';
 
 import '../widgets/widgets.dart';
 
@@ -21,6 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final movieProvider = Provider.of<Movies>(context, listen: false);
+    final directorProvider = Provider.of<Directors>(context, listen: false);
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
@@ -48,9 +52,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       height: 140,
                       child: ListView.separated(
                         scrollDirection: Axis.horizontal,
-                        itemCount: directors.length,
+                        itemCount: directorProvider.directors.length,
                         itemBuilder: (context, index) {
-                          final director = directors[index];
+                          final director = directorProvider.directors[index];
                           return GestureDetector(
                             onTap: () {
                               Navigator.of(context).pushNamed(DirectorDetails.routeName, arguments: director);
@@ -63,39 +67,11 @@ class _HomeScreenState extends State<HomeScreen> {
                         separatorBuilder: ((context, index) => const Gap(5)),
                       ),
                     ),
-                    const Text(
-                      "New titles",
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    const WhiteLargeText(text: "New Titles"),
                     const Gap(10),
                     //new movies
-                    SizedBox(
-                      height: 330,
-                       child:ListView.separated(
-                              scrollDirection: Axis.horizontal,
-                              itemCount: movies.length,
-                              itemBuilder: (context, index) {
-                                final movie = movies[index];
-                                return GestureDetector(
-                                    onTap: () {
-                                      Navigator.of(context).pushNamed(MovieDetailsScreen.routeName, arguments: movie);
-                                    },
-                                    child: MovieCard(movie: movie));
-                              },
-                              separatorBuilder: (context, index) => const Gap(15),
-                            )
-                     
-                    ),
-                    const Text(
-                      "Genres",
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    MovieCardsList(movies: movieProvider.movies,),
+                    const WhiteLargeText(text: "Genres"),
                     const Gap(10),
                     SizedBox(
                       height: 110,
@@ -110,13 +86,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                     const Gap(20),
-                    const Text(
-                      "Coming soon",
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    const WhiteLargeText(text: "Coming soon"),
                     const Gap(10),
                     const ComingSoonMovieCard(),
                     // const Gap(70),
