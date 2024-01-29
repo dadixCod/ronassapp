@@ -13,20 +13,19 @@ class RonasApp extends StatefulWidget {
 }
 
 class _RonasAppState extends State<RonasApp> {
-    int currentIndex = 0;
-    final screens = const [
-      HomeScreen(),
-      CategoriesScreen(),
-      FavoritesScreen(),
-      ProfileScreen(),
-    ];
+  int currentIndex = 0;
+  final screens = const [
+    HomeScreen(),
+    CategoriesScreen(),
+    FavoritesScreen(),
+    ProfileScreen(),
+  ];
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Movies>(create: (ctx) => Movies()),
-        ChangeNotifierProvider<Directors>(create: (ctx)=> Directors())
-
+        ChangeNotifierProvider<Directors>(create: (ctx) => Directors())
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -34,17 +33,17 @@ class _RonasAppState extends State<RonasApp> {
         home: Scaffold(
           body: screens[currentIndex],
           bottomNavigationBar: CustomBottomNavigationBar(
-          currentIndex: currentIndex,
-          onPress: (index) {
-            setState(() {
-              currentIndex = index;
-            });
-          },
-        ),
+            currentIndex: currentIndex,
+            onPress: (index) {
+              setState(() {
+                currentIndex = index;
+              });
+            },
+          ),
         ),
         routes: {
           DirectorDetails.routeName: (context) => const DirectorDetails(),
-          MovieDetailsScreen.routeName : (context) => const MovieDetailsScreen(),
+          MovieDetailsScreen.routeName: (context) => const MovieDetailsScreen(),
         },
       ),
     );

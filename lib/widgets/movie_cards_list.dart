@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
-import 'package:provider/provider.dart';
 import 'package:ronasapp/models/movie.dart';
-import 'package:ronasapp/providers/movies.dart';
 import 'package:ronasapp/widgets/widgets.dart';
 
 import '../screens/screens.dart';

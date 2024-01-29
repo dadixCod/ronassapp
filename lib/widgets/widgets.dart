@@ -12,3 +12,4 @@ export './floating_watch_button.dart';
 export './movie_favorite.dart';
 export './white_large_text.dart';
 export './movie_cards_list.dart';
+export './genre_list.dart';

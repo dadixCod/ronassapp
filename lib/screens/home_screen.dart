@@ -5,9 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:ronasapp/models/models.dart';
 import 'package:ronasapp/providers/providers.dart';
 import 'package:ronasapp/screens/director_details_screen.dart';
-import 'package:ronasapp/screens/movie_detail_screen.dart';
 import 'package:ronasapp/utils/extensions.dart';
-import 'package:ronasapp/widgets/movie_cards_list.dart';
 
 import '../widgets/widgets.dart';
 

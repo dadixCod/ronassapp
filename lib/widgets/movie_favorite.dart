@@ -7,7 +7,14 @@ import 'package:ronasapp/utils/extensions.dart';
 
 class MovieFavorite extends StatelessWidget {
   final Movie movie;
-  const MovieFavorite({super.key, required this.movie});
+  final double height;
+  final double width;
+  const MovieFavorite({
+    super.key,
+    required this.movie,
+    this.height = 320,
+    this.width = 220,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -18,8 +25,8 @@ class MovieFavorite extends StatelessWidget {
           children: [
             Container(
               clipBehavior: Clip.hardEdge,
-              height: 320,
-              width: 220,
+              height: height,
+              width: width,
               decoration: BoxDecoration(
                 color: context.colorScheme.surface,
                 borderRadius: BorderRadius.circular(15),
@@ -54,7 +61,9 @@ class MovieFavorite extends StatelessWidget {
                         ),
                       ),
                       child: Icon(
-                        movie.isFavorite ? Icons.bookmark : Icons.bookmark_outline,
+                        movie.isFavorite
+                            ? Icons.bookmark
+                            : Icons.bookmark_outline,
                         color: Colors.white,
                       ),
                     ),
