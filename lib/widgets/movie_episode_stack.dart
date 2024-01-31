@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:ronasapp/models/models.dart';
+
 class MovieEpisodeStack extends StatelessWidget {
   const MovieEpisodeStack({
     super.key,
@@ -20,8 +21,8 @@ class MovieEpisodeStack extends StatelessWidget {
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
           ),
-          child: Image.asset(
-            movie.path,
+          child: Image.network(
+            movie.posterPath,
             fit: BoxFit.cover,
           ),
         ),
@@ -38,16 +39,16 @@ class MovieEpisodeStack extends StatelessWidget {
             )),
           ),
         ),
-        Positioned(
-          right: 30,
-          top: 10,
-          child: Text(
-            "${movie.minutes} min",
-            style: TextStyle(
-              color: Colors.grey[400],
-            ),
-          ),
-        ),
+        // Positioned(
+        //   right: 30,
+        //   top: 10,
+        //   child: Text(
+        //     "${movie.minutes} min",
+        //     style: TextStyle(
+        //       color: Colors.grey[400],
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }

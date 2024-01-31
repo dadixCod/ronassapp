@@ -23,8 +23,8 @@ class MovieBannerStack extends StatelessWidget {
         children: [
           SizedBox(
             height: 650,
-            child: Image.asset(
-              movie.path,
+            child: Image.network(
+              "${ApiConstants.imagePath}${movie.posterPath}",
               fit: BoxFit.cover,
             ),
           ),
@@ -56,7 +56,7 @@ class MovieBannerStack extends StatelessWidget {
                       SizedBox(
                         width: MediaQuery.of(context).size.width * 0.7,
                         child: Text(
-                          movie.name,
+                          movie.title,
                           style: const TextStyle(
                             fontSize: 30,
                             fontWeight: FontWeight.bold,
@@ -75,7 +75,7 @@ class MovieBannerStack extends StatelessWidget {
                               color: AppColors.orangColor,
                             ),
                             Text(
-                              movie.rating.toString(),
+                              movie.voteAverage.roundToDouble().toString(),
                               style: const TextStyle(
                                 fontWeight: FontWeight.bold,
                                 fontSize: 30,
@@ -92,7 +92,7 @@ class MovieBannerStack extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Text(
-                        movie.publishingYear,
+                        movie.releaseDate,
                         style: TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.w600,
@@ -100,40 +100,41 @@ class MovieBannerStack extends StatelessWidget {
                         ),
                       ),
                       const Gap(10),
-                      if (movie.seasons >= 1)
-                        Container(
-                          width: 5,
-                          height: 5,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.grey[500],
-                          ),
-                        ),
-                      const Gap(10),
-                      if (movie.seasons >= 1)
-                        Text(
-                          movie.seasons == 1 ? "${movie.seasons} season" : "${movie.seasons} seasons",
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey[500],
-                          ),
-                        ),
+                      // if (movie.seasons >= 1)
+                      //   Container(
+                      //     width: 5,
+                      //     height: 5,
+                      //     decoration: BoxDecoration(
+                      //       shape: BoxShape.circle,
+                      //       color: Colors.grey[500],
+                      //     ),
+                      //   ),
+                      // const Gap(10),
+                      // if (movie.seasons >= 1)
+                      //   Text(
+                      //     movie.seasons == 1 ? "${movie.seasons} season" : "${movie.seasons} seasons",
+                      //     style: TextStyle(
+                      //       fontSize: 20,
+                      //       fontWeight: FontWeight.w600,
+                      //       color: Colors.grey[500],
+                      //     ),
+                      //   ),
                     ],
                   ),
                   const Gap(15),
                   Row(
                     children: [
-                      ...movie.category.map(
+                      ...movie.genres.map(
                         (category) => Container(
-                          padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 7),
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 14, vertical: 7),
                           margin: const EdgeInsets.only(right: 10),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(10),
                             color: const Color(0xFF243C5E).withOpacity(0.8),
                           ),
                           child: Text(
-                            category,
+                            category.toString(),
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
                             ),
@@ -149,7 +150,7 @@ class MovieBannerStack extends StatelessWidget {
                     child: SingleChildScrollView(
                       controller: _textScrollController,
                       child: Text(
-                        movie.description,
+                        movie.overview,
                         textAlign: TextAlign.justify,
                       ),
                     ),

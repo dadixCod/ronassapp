@@ -6,7 +6,6 @@ import 'package:ronasapp/models/models.dart';
 import 'package:ronasapp/providers/providers.dart';
 import 'package:ronasapp/screens/director_details_screen.dart';
 import 'package:ronasapp/utils/extensions.dart';
-
 import '../widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -23,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final movieProvider = Provider.of<Movies>(context, listen: false);
     final directorProvider = Provider.of<Directors>(context, listen: false);
+
     return Scaffold(
       extendBody: true,
       resizeToAvoidBottomInset: true,
@@ -31,7 +31,8 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             SingleChildScrollView(
               child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16.0, horizontal: 16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
@@ -55,7 +56,9 @@ class _HomeScreenState extends State<HomeScreen> {
                           final director = directorProvider.directors[index];
                           return GestureDetector(
                             onTap: () {
-                              Navigator.of(context).pushNamed(DirectorDetails.routeName, arguments: director);
+                              Navigator.of(context).pushNamed(
+                                  DirectorDetails.routeName,
+                                  arguments: director);
                             },
                             child: DirectorAvatar(
                               director: director,
@@ -68,7 +71,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     const WhiteLargeText(text: "New Titles"),
                     const Gap(10),
                     //new movies
-                    MovieCardsList(movies: movieProvider.movies,),
+                    FutureBuilder(
+                      future: movieProvider.getTrendingMovies(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (snapshot.hasData) {
+                          final data = snapshot.data;
+                          return MovieCardsList(movies: data!);
+                        } else if (snapshot.hasError) {
+                          return Text(snapshot.error.toString());
+                        } else {
+                          return const Text("Error");
+                        }
+                      },
+                    ),
                     const WhiteLargeText(text: "Genres"),
                     const Gap(10),
                     SizedBox(

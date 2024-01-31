@@ -1,62 +1,50 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first, must_be_immutable
 import 'package:flutter/foundation.dart';
-
+import 'package:ronasapp/models/models.dart';
 
 @immutable
 class Movie {
-
-  final String name;
-  final List<String> category;
-  final int minutes;
-  final double rating;
-  final String path;
-  final String publishingYear;
-  final String description;
-  final int episodesNumber;
-  final int seasons;
+  final int id;
+  final String title;
+  final List<int> genres;
+  final double voteAverage;
+  final String posterPath;
+  final String overview;
+  final String releaseDate;
   bool isFavorite;
 
   Movie({
-  
-    required this.name,
-    required this.category,
-    required this.minutes,
-    required this.rating,
-    required this.path,
-    required this.publishingYear,
-    required this.description,
-    required this.episodesNumber,
-    required this.seasons,
+    required this.id,
+    required this.title,
+    required this.genres,
+    required this.voteAverage,
+    required this.posterPath,
+    required this.overview,
+    required this.releaseDate,
     this.isFavorite = false,
   });
 
-  @override
-  bool operator ==(covariant Movie other) {
-    if (identical(this, other)) return true;
-
-    return other.name == name &&
-        listEquals(other.category, category) &&
-        other.minutes == minutes &&
-        other.rating == rating &&
-        other.path == path &&
-        other.publishingYear == publishingYear &&
-        other.description == description &&
-        other.episodesNumber == episodesNumber &&
-        other.seasons == seasons &&
-        other.isFavorite == isFavorite;
+  factory Movie.fromJson(Map<String, dynamic> json) {
+    return Movie(
+      id: json['id'] ?? '00',
+      title: json['title'] ?? 'nothing',
+      genres: json['genres'] ?? [0, 0],
+      voteAverage: json['vote_average'] ?? 0.0,
+      posterPath: json['poster_path'] ?? 'nothing',
+      overview: json['overview'] ?? 'nothing',
+      releaseDate: json['release_date'] ?? '0000-00-00',
+    );
   }
 
-  @override
-  int get hashCode {
-    return name.hashCode ^
-        category.hashCode ^
-        minutes.hashCode ^
-        rating.hashCode ^
-        path.hashCode ^
-        publishingYear.hashCode ^
-        description.hashCode ^
-        episodesNumber.hashCode ^
-        seasons.hashCode ^
-        isFavorite.hashCode;
+  Map<String, dynamic> toJson() {
+    return {
+      "id": id,
+      "title": title,
+      "genres": genres,
+      "vote_average": voteAverage,
+      "poster_path": posterPath,
+      "overview": overview,
+      "release_date": releaseDate,
+    };
   }
 }

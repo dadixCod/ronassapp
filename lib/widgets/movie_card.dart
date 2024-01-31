@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:ronasapp/core/constants/api_constants.dart';
 import 'package:ronasapp/models/models.dart';
 import 'package:ronasapp/providers/movies.dart';
 import 'package:ronasapp/utils/extensions.dart';
@@ -11,6 +12,7 @@ class MovieCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final movieProvider = Provider.of<Movies>(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -24,39 +26,40 @@ class MovieCard extends StatelessWidget {
                 color: context.colorScheme.surface,
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.asset(
-                movie.path,
+              child: Image.network(
+                "${ApiConstants.imagePath}${movie.posterPath}",
                 fit: BoxFit.cover,
               ),
             ),
             Positioned(
               left: 10,
               top: 10,
-              child: Consumer<Movies>(
-                builder: (context, prov, _) => GestureDetector(
-                  onTap: () {
-                    prov.makeFavorite(movie);
-                  },
-                  child: Opacity(
-                    opacity: 0.9,
-                    child: Container(
-                      height: 36,
-                      width: 36,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        gradient: LinearGradient(
-                          colors: [
-                            Colors.grey[200]!.withOpacity(0.8),
-                            Colors.grey[400]!,
-                          ],
-                          begin: Alignment.topLeft,
-                          end: Alignment.bottomRight,
-                        ),
+              child: GestureDetector(
+                onTap: () {
+                  movieProvider.makeFavorite(movie);
+                  print(movie.isFavorite);
+                },
+                child: Opacity(
+                  opacity: 0.9,
+                  child: Container(
+                    height: 36,
+                    width: 36,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8),
+                      gradient: LinearGradient(
+                        colors: [
+                          Colors.grey[200]!.withOpacity(0.8),
+                          Colors.grey[400]!,
+                        ],
+                        begin: Alignment.topLeft,
+                        end: Alignment.bottomRight,
                       ),
-                      child: Icon(
-                        movie.isFavorite ? Icons.bookmark : Icons.bookmark_outline,
-                        color: Colors.white,
-                      ),
+                    ),
+                    child: Icon(
+                      movie.isFavorite
+                          ? Icons.bookmark
+                          : Icons.bookmark_outline,
+                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -70,7 +73,7 @@ class MovieCard extends StatelessWidget {
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: movie.rating >= 8
+                    colors: movie.voteAverage >= 8
                         ? [
                             Colors.green[300]!,
                             Colors.green,
@@ -94,7 +97,7 @@ class MovieCard extends StatelessWidget {
                       color: Colors.white,
                     ),
                     Text(
-                      movie.rating.toString(),
+                      movie.voteAverage.roundToDouble().toString(),
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
@@ -110,7 +113,7 @@ class MovieCard extends StatelessWidget {
         SizedBox(
           width: 180,
           child: Text(
-            movie.name,
+            movie.title,
             maxLines: 1,
             softWrap: true,
             overflow: TextOverflow.ellipsis,
@@ -120,13 +123,13 @@ class MovieCard extends StatelessWidget {
         SizedBox(
           width: 170,
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               SizedBox(
                 width: 80,
                 child: Text(
                   overflow: TextOverflow.ellipsis,
-                  movie.category.first.toString(),
+                  movie.genres.first.toString(),
                   style: TextStyle(
                     color: context.colorScheme.outline,
                   ),
@@ -142,12 +145,6 @@ class MovieCard extends StatelessWidget {
                 ),
               ),
               const Gap(7),
-              Text(
-                "${movie.minutes} mins",
-                style: TextStyle(
-                  color: context.colorScheme.outline,
-                ),
-              ),
             ],
           ),
         )

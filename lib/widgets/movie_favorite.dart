@@ -5,6 +5,8 @@ import 'package:ronasapp/models/models.dart';
 import 'package:ronasapp/providers/movies.dart';
 import 'package:ronasapp/utils/extensions.dart';
 
+import '../core/constants/constants.dart';
+
 class MovieFavorite extends StatelessWidget {
   final Movie movie;
   final double height;
@@ -31,8 +33,8 @@ class MovieFavorite extends StatelessWidget {
                 color: context.colorScheme.surface,
                 borderRadius: BorderRadius.circular(15),
               ),
-              child: Image.asset(
-                movie.path,
+              child: Image.network(
+                "${ApiConstants.imagePath}${movie.posterPath}",
                 fit: BoxFit.cover,
               ),
             ),
@@ -79,7 +81,7 @@ class MovieFavorite extends StatelessWidget {
                 padding: const EdgeInsets.all(6),
                 decoration: BoxDecoration(
                   gradient: LinearGradient(
-                    colors: movie.rating >= 8
+                    colors: movie.voteAverage >= 8
                         ? [
                             Colors.green[300]!,
                             Colors.green,
@@ -103,7 +105,7 @@ class MovieFavorite extends StatelessWidget {
                       color: Colors.white,
                     ),
                     Text(
-                      movie.rating.toString(),
+                      movie.voteAverage.roundToDouble().toString(),
                       style: const TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 16,
