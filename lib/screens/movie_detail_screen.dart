@@ -37,53 +37,25 @@ class _MovieDetailsScreenState extends State<MovieDetailsScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                //Movie Stack (background,title,rating,pub_year,category,description)
-
-                MovieBannerStack(movie: movie, textScrollController: _textScrollController),
+                MovieBannerStack(
+                    movie: movie, textScrollController: _textScrollController),
                 const Gap(20),
-                //if Movie show trailer , if serie show Episodes
                 const Padding(
-                  padding:  EdgeInsets.symmetric(horizontal: 15.0),
+                  padding: EdgeInsets.symmetric(horizontal: 15.0),
                   child: Text(
-                     "Trailer",
-                    style:  TextStyle(
+                    "Trailer",
+                    style: TextStyle(
                       fontSize: 26,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
                 ),
                 const Gap(10),
-                //Episodes
-                // movie.episodesNumber > 1
-                //     ? Container(
-                //         padding: const EdgeInsets.only(left: 15),
-                //         height: 280,
-                //         child: ListView.builder(
-                //             scrollDirection: Axis.horizontal,
-                //             itemCount: movie.episodesNumber,
-                //             itemBuilder: (context, index) {
-                //               return Column(
-                //                 crossAxisAlignment: CrossAxisAlignment.start,
-                //                 children: [
-                //                   MovieEpisodeStack(movie: movie),
-                //                   const Gap(8),
-                //                   Padding(
-                //                     padding: const EdgeInsets.only(left: 10.0),
-                //                     child: Text("Episode ${index + 1}"),
-                //                   )
-                //                 ],
-                //               );
-                //             }),
-                //       )
-                //     :
-                    //Movie Trailer
                 MovieTrailerStack(movie: movie),
                 const Gap(100)
               ],
             ),
           ),
-
-          //watch now button
           const FloatingWatchButton(),
         ],
       ),

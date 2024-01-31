@@ -100,25 +100,6 @@ class MovieBannerStack extends StatelessWidget {
                         ),
                       ),
                       const Gap(10),
-                      // if (movie.seasons >= 1)
-                      //   Container(
-                      //     width: 5,
-                      //     height: 5,
-                      //     decoration: BoxDecoration(
-                      //       shape: BoxShape.circle,
-                      //       color: Colors.grey[500],
-                      //     ),
-                      //   ),
-                      // const Gap(10),
-                      // if (movie.seasons >= 1)
-                      //   Text(
-                      //     movie.seasons == 1 ? "${movie.seasons} season" : "${movie.seasons} seasons",
-                      //     style: TextStyle(
-                      //       fontSize: 20,
-                      //       fontWeight: FontWeight.w600,
-                      //       color: Colors.grey[500],
-                      //     ),
-                      //   ),
                     ],
                   ),
                   const Gap(15),
