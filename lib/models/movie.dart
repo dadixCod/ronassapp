@@ -6,7 +6,7 @@ import 'package:ronasapp/models/models.dart';
 class Movie {
   final int id;
   final String title;
-  final List<int> genres;
+  final List<dynamic> genres;
   final double voteAverage;
   final String posterPath;
   final String overview;
@@ -28,7 +28,7 @@ class Movie {
     return Movie(
       id: json['id'] ?? '00',
       title: json['title'] ?? 'nothing',
-      genres: json['genres'] ?? [0, 0],
+      genres: json['genre_ids'] ?? [0, 0],
       voteAverage: json['vote_average'] ?? 0.0,
       posterPath: json['poster_path'] ?? 'nothing',
       overview: json['overview'] ?? 'nothing',

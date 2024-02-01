@@ -1,6 +1,11 @@
+import 'dart:async';
+
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
+import 'package:ronasapp/providers/genres.dart';
 import 'package:ronasapp/providers/movies.dart';
 import 'package:ronasapp/widgets/genre_list.dart';
 import 'package:ronasapp/widgets/movie_card.dart';
@@ -13,6 +18,8 @@ class CategoriesScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final movieProv = Provider.of<Movies>(context, listen: false);
+
+    final genreProv = Provider.of<Genres>(context, listen: false);
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
@@ -23,25 +30,27 @@ class CategoriesScreen extends StatelessWidget {
               children: [
                 const WhiteLargeText(text: "Categories"),
                 const Gap(25),
-                GenreList(
-                  movies: movieProv.movies,
-                  genreName: "Action",
-                ),
-                const Gap(10),
-                GenreList(
-                  movies: movieProv.movies,
-                  genreName: "Biography",
-                ),
-                const Gap(10),
-                GenreList(
-                  movies: movieProv.movies,
-                  genreName: "Anime",
-                ),
-                GenreList(
-                  movies: movieProv.movies,
-                  genreName: "Cartoon",
-                ),
-                const Gap(10),
+                FutureBuilder(
+                    future: movieProv.getAllMovies(),
+                    builder: (context, snapshot) {
+                      return SizedBox(
+                        height: MediaQuery.of(context).size.height - 170,
+                        child: ListView.builder(
+                          itemCount: genreProv.genres.length,
+                          itemBuilder: (context, index) {
+                            final genre = genreProv.genres[index];
+                            final moviesInGenre =
+                                movieProv.getMoviesByGenre(genre.id);
+                            if (moviesInGenre.isEmpty) {
+                              return const Gap(5);
+                            } else {
+                              return GenreList(
+                                  movies: moviesInGenre, genreName: genre.name);
+                            }
+                          },
+                        ),
+                      );
+                    }),
               ],
             ),
           ),

@@ -25,7 +25,8 @@ class _RonasAppState extends State<RonasApp> {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<Movies>(create: (ctx) => Movies()),
-        ChangeNotifierProvider<Directors>(create: (ctx) => Directors())
+        ChangeNotifierProvider<Directors>(create: (ctx) => Directors()),
+        ChangeNotifierProvider<Genres>(create: (ctx) => Genres()),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
@@ -44,6 +45,8 @@ class _RonasAppState extends State<RonasApp> {
         routes: {
           DirectorDetails.routeName: (context) => const DirectorDetails(),
           MovieDetailsScreen.routeName: (context) => const MovieDetailsScreen(),
+          SpecificCategoryScreen.routeName: (context) =>
+              const SpecificCategoryScreen()
         },
       ),
     );

@@ -5,6 +5,7 @@ import 'package:gap/gap.dart';
 import 'package:ronasapp/models/models.dart';
 import 'package:ronasapp/providers/providers.dart';
 import 'package:ronasapp/screens/director_details_screen.dart';
+import 'package:ronasapp/screens/screens.dart';
 import 'package:ronasapp/utils/extensions.dart';
 import '../widgets/widgets.dart';
 
@@ -22,6 +23,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final movieProvider = Provider.of<Movies>(context, listen: false);
     final directorProvider = Provider.of<Directors>(context, listen: false);
+    final genreProvider = Provider.of<Genres>(context, listen: false);
 
     return Scaffold(
       extendBody: true,
@@ -68,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         separatorBuilder: ((context, index) => const Gap(5)),
                       ),
                     ),
-                    const WhiteLargeText(text: "New Titles"),
+                    const WhiteLargeText(text: "Trending"),
                     const Gap(10),
                     //new movies
                     FutureBuilder(
@@ -91,18 +93,44 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     const WhiteLargeText(text: "Genres"),
                     const Gap(10),
-                    SizedBox(
-                      height: 110,
-                      child: ListView.separated(
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          final genre = genres[index];
-                          return GenreCard(genre: genre);
-                        },
-                        separatorBuilder: (context, index) => const Gap(10),
-                        itemCount: genres.length,
-                      ),
-                    ),
+                    FutureBuilder(
+                        future: genreProvider.getGenres(),
+                        builder: (context, snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return const Center(
+                                child: CircularProgressIndicator());
+                          } else if (snapshot.hasData) {
+                            return SizedBox(
+                              height: 110,
+                              child: ListView.separated(
+                                scrollDirection: Axis.horizontal,
+                                itemBuilder: (context, index) {
+                                  final genre = genreProvider.genres[index];
+                                  final moviesInGenre =
+                                      movieProvider.getMoviesByGenre(genre.id);
+                                  return GestureDetector(
+                                      onTap: () {
+                                        Navigator.of(context).pushNamed(
+                                          SpecificCategoryScreen.routeName,
+                                          arguments: [
+                                            genre.name,
+                                            moviesInGenre
+                                          ],
+                                        );
+                                      },
+                                      child: GenreCard(genre: genre));
+                                },
+                                separatorBuilder: (context, index) =>
+                                    const Gap(10),
+                                itemCount: genreProvider.genres.length,
+                              ),
+                            );
+                          } else {
+                            return const Text("Error");
+                          }
+                        }),
+
                     const Gap(20),
                     const WhiteLargeText(text: "Coming soon"),
                     const Gap(10),

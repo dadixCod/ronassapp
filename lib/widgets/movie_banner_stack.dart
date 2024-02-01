@@ -1,23 +1,32 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
+import 'package:provider/provider.dart';
 import 'package:ronasapp/utils/utils.dart';
 import 'package:ronasapp/widgets/back_btn_circle.dart';
 
 import '../core/core.dart';
 import '../models/models.dart';
+import '../providers/genres.dart';
 
 class MovieBannerStack extends StatelessWidget {
   const MovieBannerStack({
     super.key,
     required this.movie,
     required ScrollController textScrollController,
-  }) : _textScrollController = textScrollController;
+    required ScrollController genreScrollController,
+  })  : _textScrollController = textScrollController,
+        _genreScrollController = genreScrollController;
 
   final Movie movie;
   final ScrollController _textScrollController;
+  final ScrollController _genreScrollController;
 
   @override
   Widget build(BuildContext context) {
+    final genreProvider = Provider.of<Genres>(context);
+    final genres = genreProvider.getMovieGenres(movie.genres);
     return SafeArea(
       child: Stack(
         children: [
@@ -103,10 +112,16 @@ class MovieBannerStack extends StatelessWidget {
                     ],
                   ),
                   const Gap(15),
-                  Row(
-                    children: [
-                      ...movie.genres.map(
-                        (category) => Container(
+                  SizedBox(
+                    height: 40,
+                    child: ListView.builder(
+                      shrinkWrap: true,
+                      controller: _genreScrollController,
+                      scrollDirection: Axis.horizontal,
+                      itemCount: genres.length,
+                      itemBuilder: (context, index) {
+                        final genre = genres[index];
+                        return Container(
                           padding: const EdgeInsets.symmetric(
                               horizontal: 14, vertical: 7),
                           margin: const EdgeInsets.only(right: 10),
@@ -115,14 +130,14 @@ class MovieBannerStack extends StatelessWidget {
                             color: const Color(0xFF243C5E).withOpacity(0.8),
                           ),
                           child: Text(
-                            category.toString(),
+                            genre.toString(),
                             style: const TextStyle(
                               fontWeight: FontWeight.w500,
                             ),
                           ),
-                        ),
-                      ),
-                    ],
+                        );
+                      },
+                    ),
                   ),
                   const Gap(10),
                   SizedBox(

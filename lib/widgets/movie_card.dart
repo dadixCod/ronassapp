@@ -3,6 +3,7 @@ import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:ronasapp/core/constants/api_constants.dart';
 import 'package:ronasapp/models/models.dart';
+import 'package:ronasapp/providers/genres.dart';
 import 'package:ronasapp/providers/movies.dart';
 import 'package:ronasapp/utils/extensions.dart';
 
@@ -13,6 +14,8 @@ class MovieCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final movieProvider = Provider.of<Movies>(context);
+    final genresProvider = Provider.of<Genres>(context);
+    final genres = genresProvider.getMovieGenres(movie.genres);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -37,7 +40,6 @@ class MovieCard extends StatelessWidget {
               child: GestureDetector(
                 onTap: () {
                   movieProvider.makeFavorite(movie);
-                  print(movie.isFavorite);
                 },
                 child: Opacity(
                   opacity: 0.9,
@@ -129,19 +131,10 @@ class MovieCard extends StatelessWidget {
                 width: 80,
                 child: Text(
                   overflow: TextOverflow.ellipsis,
-                  movie.genres.first.toString(),
+                  genres.first.toString(),
                   style: TextStyle(
                     color: context.colorScheme.outline,
                   ),
-                ),
-              ),
-              const Gap(7),
-              Container(
-                height: 5,
-                width: 5,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: context.colorScheme.outline,
                 ),
               ),
               const Gap(7),

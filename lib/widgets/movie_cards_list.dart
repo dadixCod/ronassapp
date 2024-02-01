@@ -15,7 +15,7 @@ class MovieCardsList extends StatelessWidget {
       height: 330,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        itemCount: movies.length,
+        itemCount: 10,
         itemBuilder: (context, index) {
           final movie = movies[index];
           return GestureDetector(

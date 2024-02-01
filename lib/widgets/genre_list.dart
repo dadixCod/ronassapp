@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:ronasapp/screens/screens.dart';
 import 'package:ronasapp/widgets/widgets.dart';
 
 import 'package:ronasapp/models/models.dart';
@@ -24,7 +25,11 @@ class GenreList extends StatelessWidget {
               ),
             ),
             TextButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.of(context).pushNamed(
+                    SpecificCategoryScreen.routeName,
+                    arguments: [genreName, movies]);
+              },
               child: const Row(
                 children: [
                   Text(

@@ -11,7 +11,7 @@ class FavoritesScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final movieProv = Provider.of<Movies>(context);
+    final movieProv = Provider.of<Movies>(context, listen: true);
     final favoritesList = movieProv.favoriteMovies;
     return Scaffold(
       body: SafeArea(
@@ -67,7 +67,9 @@ class FavoritesScreen extends StatelessWidget {
                           duration: const Duration(milliseconds: 100),
                           padding: EdgeInsets.zero,
                           backCardOffset: const Offset(90, -10),
-                          numberOfCardsDisplayed: favoritesList.length <= 3 ? favoritesList.length : 3,
+                          numberOfCardsDisplayed: favoritesList.length <= 3
+                              ? favoritesList.length
+                              : 3,
                           cardBuilder: ((
                             context,
                             index,
@@ -88,10 +90,10 @@ class FavoritesScreen extends StatelessWidget {
                         ),
                       ),
                 const Gap(20),
-                const WhiteLargeText(text: "Recomended"),
+                const WhiteLargeText(text: "Recommended"),
                 const Gap(10),
                 MovieCardsList(
-                  movies: movieProv.movies,
+                  movies: movieProv.popularMovies,
                 )
               ],
             ),
