@@ -11,8 +11,8 @@ class NavigationBarIcon extends StatelessWidget {
     return Image.asset(
       path,
       color: color,
-      width: 25,
-      height: 25,
+      width: 20,
+      height: 20,
     );
   }
 }

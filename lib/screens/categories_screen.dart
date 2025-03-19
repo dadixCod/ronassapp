@@ -1,15 +1,9 @@
-import 'dart:async';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:gap/gap.dart';
 import 'package:provider/provider.dart';
 import 'package:ronasapp/providers/genres.dart';
 import 'package:ronasapp/providers/movies.dart';
 import 'package:ronasapp/widgets/genre_list.dart';
-import 'package:ronasapp/widgets/movie_card.dart';
-import 'package:ronasapp/widgets/movie_favorite.dart';
 import 'package:ronasapp/widgets/white_large_text.dart';
 
 class CategoriesScreen extends StatelessWidget {
@@ -45,7 +39,9 @@ class CategoriesScreen extends StatelessWidget {
                               return const Gap(5);
                             } else {
                               return GenreList(
-                                  movies: moviesInGenre, genreName: genre.name);
+                                movies: moviesInGenre,
+                                genreName: genre.name,
+                              );
                             }
                           },
                         ),

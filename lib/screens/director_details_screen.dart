@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
 import 'package:ronasapp/utils/extensions.dart';
+
 import '../models/models.dart';
 import '../widgets/widgets.dart';
 
@@ -51,7 +52,11 @@ class DirectorDetails extends StatelessWidget {
                     ),
                   ),
                 ),
-                const BackBtnCircle(),
+                const Positioned(
+                  top: 20,
+                  left: 20,
+                  child: BackBtnCircle(),
+                ),
               ],
             ),
             const Gap(15),

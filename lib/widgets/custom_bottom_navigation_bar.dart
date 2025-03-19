@@ -5,10 +5,12 @@ import 'package:ronasapp/widgets/widgets.dart';
 class CustomBottomNavigationBar extends StatefulWidget {
   final int currentIndex;
   final Function(int) onPress;
-  const CustomBottomNavigationBar({super.key, required this.onPress, required this.currentIndex});
+  const CustomBottomNavigationBar(
+      {super.key, required this.onPress, required this.currentIndex});
 
   @override
-  State<CustomBottomNavigationBar> createState() => _CustomBottomNavigationBarState();
+  State<CustomBottomNavigationBar> createState() =>
+      _CustomBottomNavigationBarState();
 }
 
 class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
@@ -17,9 +19,9 @@ class _CustomBottomNavigationBarState extends State<CustomBottomNavigationBar> {
     final activeColor = context.colorScheme.primary;
     final inActiveColor = context.colorScheme.outline;
     return SizedBox(
-      height: 80,
+      height: 60,
       child: BottomNavigationBar(
-        useLegacyColorScheme: false,
+        useLegacyColorScheme: true,
         showSelectedLabels: false,
         elevation: 0,
         currentIndex: widget.currentIndex,

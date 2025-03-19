@@ -13,21 +13,24 @@ class MovieCardsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       height: 330,
-      child: ListView.separated(
-        scrollDirection: Axis.horizontal,
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          final movie = movies[index];
-          return GestureDetector(
-            onTap: () {
-              Navigator.of(context)
-                  .pushNamed(MovieDetailsScreen.routeName, arguments: movie);
-            },
-            child: MovieCard(movie: movie),
-          );
-        },
-        separatorBuilder: (context, index) => const Gap(15),
-      ),
+      child: movies.isEmpty
+          ? const Center(child: CircularProgressIndicator())
+          : ListView.separated(
+              scrollDirection: Axis.horizontal,
+              itemCount: 10,
+              itemBuilder: (context, index) {
+                final movie = movies[index];
+                return GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pushNamed(
+                        MovieDetailsScreen.routeName,
+                        arguments: movie);
+                  },
+                  child: MovieCard(movie: movie),
+                );
+              },
+              separatorBuilder: (context, index) => const Gap(15),
+            ),
     );
   }
 }

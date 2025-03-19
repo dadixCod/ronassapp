@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-
 import 'package:gap/gap.dart';
-import 'package:ronasapp/models/models.dart';
+import 'package:provider/provider.dart';
 import 'package:ronasapp/providers/providers.dart';
-import 'package:ronasapp/screens/director_details_screen.dart';
 import 'package:ronasapp/screens/screens.dart';
 import 'package:ronasapp/utils/extensions.dart';
+
 import '../widgets/widgets.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -44,7 +42,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         "Popular directors",
                         style: context.textTheme.titleLarge!.copyWith(
                           fontWeight: FontWeight.w400,
-                          fontSize: 26,
+                          fontSize: 22,
+                          fontFamily: 'Poppins',
                         ),
                       ),
                     ),
@@ -99,7 +98,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           if (snapshot.connectionState ==
                               ConnectionState.waiting) {
                             return const Center(
-                                child: CircularProgressIndicator());
+                              child: CircularProgressIndicator(),
+                            );
                           } else if (snapshot.hasData) {
                             return SizedBox(
                               height: 110,

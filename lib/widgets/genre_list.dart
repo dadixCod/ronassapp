@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:gap/gap.dart';
+import 'package:ronasapp/models/models.dart';
 import 'package:ronasapp/screens/screens.dart';
 import 'package:ronasapp/widgets/widgets.dart';
-
-import 'package:ronasapp/models/models.dart';
 
 class GenreList extends StatelessWidget {
   final String genreName;
@@ -55,10 +54,16 @@ class GenreList extends StatelessWidget {
             itemCount: movies.length,
             itemBuilder: (context, index) {
               final movie = movies[index];
-              return MovieFavorite(
-                movie: movie,
-                height: 220,
-                width: 150,
+              return GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(MovieDetailsScreen.routeName,
+                      arguments: movie);
+                },
+                child: MovieFavorite(
+                  movie: movie,
+                  height: 220,
+                  width: 150,
+                ),
               );
             },
             separatorBuilder: (context, index) {

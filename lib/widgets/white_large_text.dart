@@ -9,8 +9,9 @@ class WhiteLargeText extends StatelessWidget {
     return Text(
       text,
       style: const TextStyle(
-        fontSize: 26,
+        fontSize: 22,
         fontWeight: FontWeight.w500,
+        fontFamily: 'Poppins',
       ),
     );
   }
